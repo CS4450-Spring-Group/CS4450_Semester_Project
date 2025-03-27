@@ -1,11 +1,9 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
    java -cp "build/classes:/Users/jellyj./Desktop/CS4450/lwjgl-2.9.2/jar/lwjgl.jar:/Users/jellyj./Desktop/CS4450/lwjgl-2.9.2/jar/lwjgl_util.jar:/Users/jellyj./Desktop/CS4450/lwjgl-2.9.2/jar/jinput.jar"      -Djava.library.path="/Users/jellyj./Desktop/CS4450/lwjgl-2.9.2/native/macosx"      Cube.java
 
  */
 package cs4450_semester_project;
-//import basic3d.*;
+
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import static org.lwjgl.opengl.GL11.*;
@@ -44,7 +42,7 @@ public class Cube {
         v7 = createVertex(x0 + s, y0 + s, s);
     }
     
-    public FloatBuffer createVertex(float x, float y, float z) {
+    private FloatBuffer createVertex(float x, float y, float z) {
         FloatBuffer vertex = BufferUtils.createFloatBuffer(3);
         vertex.put(x).put(y).put(z);
         vertex.flip();
@@ -62,54 +60,20 @@ public class Cube {
     }
     
     private void cube(){
+        glColor3f(1.0f, 0.0f, 0.0f); // Red color
         quad(v6, v2, v3, v7);
+        glColor3f(1.000f, 0.647f, 0.000f); // Orange color
         quad(v5, v1, v0, v4);
+        glColor3f(1.0f, 1.0f, 0.0f); // Yellow color
         quad(v7, v3, v1, v5);
+        glColor3f(0.0f, 0.502f, 0.0f); // Green color
         quad(v4, v0, v2, v6);
+        glColor3f(0.0f, 1.0f, 1.0f); // Cyan color
         quad(v2, v0, v1, v3);
+        glColor3f(0.502f, 0.000f, 0.502f); // Purple color
         quad(v7, v5, v4, v6);
     }
-
-    
-    private void drawCube() {   
-        glColor3f(1.0f,1.0f,0.0f);
-        glPointSize(10);
-        glBegin(GL_LINE_LOOP);
-            //Top
-            glColor3f(0.0f,0.0f,1.0f);
-            glVertex3f(200f, 200f,100f);
-            glVertex3f(100f, 200f,100f);
-            glVertex3f(100f, 200f, 0f);
-            glVertex3f(200f, 200f, 0f);
-            //Bottom
-            glVertex3f( 200f,100f, 0f);
-            glVertex3f(100f,100f, 0f);
-            glVertex3f(100f,100f,100f);
-            glVertex3f( 200f,100f,100f);
-            //Front
-            glVertex3f( 200f,200f, 0f);
-            glVertex3f(100f, 200f, 0f);
-            glVertex3f(100f,100f, 0f);
-            glVertex3f( 200f,100f, 0f);
-            //Back
-            glVertex3f( 100f,200f,100f);
-            glVertex3f(200f,200f,100f);
-            glVertex3f(200f, 100f,100f);
-            glVertex3f( 100f, 100f,100f);
-            //Left
-            glVertex3f(100f, 200f,0f);
-            glVertex3f(100f, 200f,100f);
-            glVertex3f(100f,100f,100f);
-            glVertex3f(100f,100f, 0f);
-            //Right
-            glVertex3f( 200f, 200f,100f);
-            glVertex3f( 200f, 200f, 0f);
-            glVertex3f( 200f,100f, 0f);
-            glVertex3f( 200f,100f,100f);
-        glEnd();
-     
-    }
-    
+   
     public void start() {
         try {
             createWindow();
