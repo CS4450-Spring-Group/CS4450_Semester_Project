@@ -6,6 +6,13 @@ import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.util.glu.GLU;
 import org.lwjgl.input.Mouse;
 
+/**
+ *
+ * @author Max
+ * @author sarmi
+ * @author jellyj.
+ */
+
 public class Semester_Project {
     private FPCameraController camera;
     private DisplayMode displayMode;
