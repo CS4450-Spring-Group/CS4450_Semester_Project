@@ -14,7 +14,7 @@ import org.lwjgl.BufferUtils;
  */
 public class Cube {
     
-    float cubeSize = 1f;
+    float cubeSize = 2f;
     int x0 = -1;
     int y0 = -1;
     FloatBuffer v0, v1, v2, v3, v4, v5, v6, v7;
@@ -25,7 +25,7 @@ public class Cube {
     }
     
     public void initVertices(){
-        float s = cubeSize;
+        float s = cubeSize/2;
         
         v0 = createVertex(x0, y0, 0);
         v1 = createVertex(x0, y0 + s, 0);
@@ -54,18 +54,23 @@ public class Cube {
     }
     
     public void cube(){
-        glColor3f(1.0f, 0.0f, 0.0f); // Red color
-        quad(v6, v2, v3, v7);
-        glColor3f(1.000f, 0.647f, 0.000f); // Orange color
-        quad(v5, v1, v0, v4);
-        glColor3f(1.0f, 1.0f, 0.0f); // Yellow color
-        quad(v7, v3, v1, v5);
-        glColor3f(0.0f, 0.502f, 0.0f); // Green color
-        quad(v4, v0, v2, v6);
-        glColor3f(0.0f, 1.0f, 1.0f); // Cyan color
+        glColor3f(0.0f, 1.0f, 1.0f); // BACK: Cyan color
         quad(v2, v0, v1, v3);
-        glColor3f(0.502f, 0.000f, 0.502f); // Purple color
+        glColor3f(0.0f, 0.502f, 0.0f); // BOTTOM: Green color
+        quad(v4, v0, v2, v6);
+        glColor3f(1.0f, 0.0f, 0.0f); // RIGHT: Red color
+        quad(v6, v2, v3, v7);
+        glColor3f(1.000f, 0.647f, 0.000f); // LEFT: Orange color
+        quad(v5, v1, v0, v4);
+        glColor3f(1.0f, 1.0f, 0.0f); // TOP: Yellow color
+        quad(v7, v3, v1, v5);
+        //glColor3f(0.0f, 0.502f, 0.0f); // BOTTOM: Green color
+        //quad(v4, v0, v2, v6);
+        //glColor3f(0.0f, 1.0f, 1.0f); // Cyan color
+        //quad(v2, v0, v1, v3);
+        glColor3f(0.502f, 0.000f, 0.502f); // FRONT: Purple color
         quad(v7, v5, v4, v6);
+        
     }
    
     public void start() {
