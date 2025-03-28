@@ -14,20 +14,20 @@ import org.lwjgl.BufferUtils;
  */
 public class Cube {
     
-    float cubeSize = 200f;
-    int x = 640;
-    int y = 480;
+    float cubeSize = 1f;
+    int x0 = 0;
+    int y0 = 0;
     FloatBuffer v0, v1, v2, v3, v4, v5, v6, v7;
 
     public static void main(String[] args) {
-        Cube cube = new Cube();
-        cube.start();
+        //Cube cube = new Cube();
+        //cube.start();
     }
     
-    private void initVertices(){
+    public void initVertices(){
         // bottom left vertex
-        float x0 = (x/2) - (cubeSize/2);
-        float y0 = (y/2) - (cubeSize/2);
+        //float x0 = (x/2) - (cubeSize/2);
+        //float y0 = (y/2) - (cubeSize/2);
         float s = cubeSize;
         
         v0 = createVertex(x0, y0, 0);
@@ -74,16 +74,18 @@ public class Cube {
    
     public void start() {
         try {
-            createWindow();
-            initGL();
+            //createWindow();
+            //initGL();
             initVertices();
-            render();
+            cube();
+            //render();
         } catch (Exception e) {
         e.printStackTrace();
        
         }
     }
     
+    /**
     private void createWindow() throws Exception{
         Display.setFullscreen(false);
         Display.setDisplayMode(new DisplayMode(x, y));
@@ -118,5 +120,6 @@ public class Cube {
         }
         Display.destroy();
     }
+    */
     
 }
