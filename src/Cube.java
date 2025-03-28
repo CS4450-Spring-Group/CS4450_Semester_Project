@@ -14,9 +14,10 @@ import org.lwjgl.BufferUtils;
  */
 public class Cube {
     
-    float cubeSize = 2f;
+    float cubeSize = 1f;
     int x0 = -1;
     int y0 = -1;
+    float z0 = 0.5f;
     FloatBuffer v0, v1, v2, v3, v4, v5, v6, v7;
 
     public static void main(String[] args) {
@@ -25,12 +26,12 @@ public class Cube {
     }
     
     public void initVertices(){
-        float s = cubeSize/2;
+        float s = cubeSize;
         
-        v0 = createVertex(x0, y0, 0);
-        v1 = createVertex(x0, y0 + s, 0);
-        v2 = createVertex(x0 + s, y0, 0);
-        v3 = createVertex(x0 + s, y0 + s, 0);
+        v0 = createVertex(x0, y0, z0);
+        v1 = createVertex(x0, y0 + s, z0);
+        v2 = createVertex(x0 + s, y0, z0);
+        v3 = createVertex(x0 + s, y0 + s, z0);
         v4 = createVertex(x0, y0, s);
         v5 = createVertex(x0, y0 + s, s);
         v6 = createVertex(x0 + s, y0, s);

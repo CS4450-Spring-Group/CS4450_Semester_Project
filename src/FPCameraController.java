@@ -106,7 +106,7 @@ public class FPCameraController {
     
     public void gameLoop()
     {
-        FPCameraController camera = new FPCameraController(0, 0, 0);
+        FPCameraController camera = new FPCameraController(2, 0, -3);
         float dx = 0.0f;
         float dy = 0.0f;
         float dt = 0.0f; //length of frame
@@ -154,7 +154,7 @@ public class FPCameraController {
             {
                 camera.moveUp(movementSpeed);
             }
-            if (Keyboard.isKeyDown(Keyboard.KEY_E)) {
+            if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
                 camera.moveDown(movementSpeed);
             }
             //set the modelview matrix back to the identity
