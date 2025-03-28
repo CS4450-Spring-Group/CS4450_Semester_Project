@@ -2,8 +2,6 @@
    java -cp "build/classes:/Users/jellyj./Desktop/CS4450/lwjgl-2.9.2/jar/lwjgl.jar:/Users/jellyj./Desktop/CS4450/lwjgl-2.9.2/jar/lwjgl_util.jar:/Users/jellyj./Desktop/CS4450/lwjgl-2.9.2/jar/jinput.jar"      -Djava.library.path="/Users/jellyj./Desktop/CS4450/lwjgl-2.9.2/native/macosx"      Cube.java
 
  */
-package cs4450_semester_project;
-
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import static org.lwjgl.opengl.GL11.*;

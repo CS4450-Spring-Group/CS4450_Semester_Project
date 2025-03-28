@@ -9,7 +9,6 @@
 * purpose: This program reads from the file the specifications to draw primitives
 *
 ****************************************************************/
-
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
@@ -39,6 +38,11 @@ public class Basic3D {
                 break;
             }
         }
+        
+        if (displayMode == null) {
+            displayMode = Display.getDesktopDisplayMode(); // fallback to default mode
+        }
+        
         Display.setDisplayMode(displayMode);
         Display.setTitle("Hey Mom! I am using" + "OpenGL!!!");
         Display.create();
