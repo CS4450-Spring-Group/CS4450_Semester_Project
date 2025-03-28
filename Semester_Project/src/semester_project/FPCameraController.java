@@ -126,6 +126,12 @@ public class FPCameraController {
         {
             time = Sys.getTime();
             lastTime = time;
+            
+            //controll camera yaw from x movement fromt the mouse
+            camera.yaw(dx * mouseSensitivity);
+            //controll camera pitch from y movement fromt the mouse
+            camera.pitch(dy * mouseSensitivity);
+
             //distance in mouse movement
             //from the last getDX() call.
             dx = Mouse.getDX();
