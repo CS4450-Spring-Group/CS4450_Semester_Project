@@ -7,6 +7,8 @@ package semester_project;
 /**
  *
  * @author Max
+ * @author sarmi
+ * @author jellyj.
  */
 public class Vector3Float {
     public float x, y, z;
