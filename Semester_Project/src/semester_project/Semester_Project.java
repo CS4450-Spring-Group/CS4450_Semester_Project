@@ -16,12 +16,15 @@ import org.lwjgl.input.Mouse;
 public class Semester_Project {
     private FPCameraController camera;
     private DisplayMode displayMode;
+    private Cube cube;
 
     public void start() {
         try {
             createWindow();
             initGL();
             camera = new FPCameraController(0, 0, 0);
+            cube = new Cube();
+            cube.initVertices();
             Mouse.setGrabbed(true);
             gameLoop();
             Display.destroy();
@@ -46,6 +49,7 @@ public class Semester_Project {
     
     private void initGL() {
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+        
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
         GLU.gluPerspective(100.0f, (float)displayMode.getWidth() / (float)displayMode.getHeight(), 0.1f, 300.0f);
@@ -53,76 +57,27 @@ public class Semester_Project {
         glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
     }
     
-    private void gameLoop() {
-        while (!Display.isCloseRequested()) {
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-            glLoadIdentity();
-            
-            if (!Mouse.isGrabbed()) {
-                Mouse.setGrabbed(true);
-            }
-            
-            float mouseDX = Mouse.getDX() * 0.1f;
-            float mouseDY = Mouse.getDY() * 0.1f;
-            camera.yaw(mouseDX);
-            camera.pitch(mouseDY);
-            
-            camera.gameLoop();
-            drawCube();
-            
-            Display.update();
-            Display.sync(60);
-        }
+private void gameLoop() {
+    cube = new Cube();
+    cube.initVertices(); // Initialize cube geometry
+
+    while (!Display.isCloseRequested()) {
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glLoadIdentity();
+        
+        GLU.gluLookAt(3, 3, 8,   // Camera position
+                      0, 0, 0,   // Look at center
+                      0, 1, 0);  // Up vector
+        
+        glPushMatrix();
+        glRotatef(20, 1, 1, 0); // Rotate for 3D effect
+        cube.cube();            // Render cube
+        glPopMatrix();
+
+        Display.update();
+        Display.sync(60);
     }
-    
-    private void drawCube() {
-        glBegin(GL_QUADS);
-        
-        // Front Face (red)
-        glColor3f(1, 0, 0);
-        glVertex3f(-1, -1, 1);
-        glVertex3f(1, -1, 1);
-        glVertex3f(1, 1, 1);
-        glVertex3f(-1, 1, 1);
-        
-        // Back Face (green)
-        glColor3f(0, 1, 0);
-        glVertex3f(-1, -1, -1);
-        glVertex3f(-1, 1, -1);
-        glVertex3f(1, 1, -1);
-        glVertex3f(1, -1, -1);
-        
-        // Top Face (blue)
-        glColor3f(0, 0, 1);
-        glVertex3f(-1, 1, -1);
-        glVertex3f(-1, 1, 1);
-        glVertex3f(1, 1, 1);
-        glVertex3f(1, 1, -1);
-        
-        // Bottom Face (yellow)
-        glColor3f(1, 1, 0);
-        glVertex3f(-1, -1, -1);
-        glVertex3f(1, -1, -1);
-        glVertex3f(1, -1, 1);
-        glVertex3f(-1, -1, 1);
-        
-        // Right Face (magenta)
-        glColor3f(1, 0, 1);
-        glVertex3f(1, -1, -1);
-        glVertex3f(1, 1, -1);
-        glVertex3f(1, 1, 1);
-        glVertex3f(1, -1, 1);
-        
-        // Left Face (cyan)
-        glColor3f(0, 1, 1);
-        glVertex3f(-1, -1, -1);
-        glVertex3f(-1, -1, 1);
-        glVertex3f(-1, 1, 1);
-        glVertex3f(-1, 1, -1);
-        
-        glEnd();
-    }
-    
+}
     public static void main(String[] args) {
         new Semester_Project().start();
     }
