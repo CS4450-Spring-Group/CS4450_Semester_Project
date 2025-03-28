@@ -20,14 +20,11 @@ public class Cube {
     FloatBuffer v0, v1, v2, v3, v4, v5, v6, v7;
 
     public static void main(String[] args) {
-        //Cube cube = new Cube();
-        //cube.start();
+        Cube cube = new Cube();
+        cube.start();
     }
     
     public void initVertices(){
-        // bottom left vertex
-        //float x0 = (x/2) - (cubeSize/2);
-        //float y0 = (y/2) - (cubeSize/2);
         float s = cubeSize;
         
         v0 = createVertex(x0, y0, 0);
@@ -74,8 +71,6 @@ public class Cube {
    
     public void start() {
         try {
-            //createWindow();
-            //initGL();
             initVertices();
             cube();
             //render();
@@ -86,22 +81,6 @@ public class Cube {
     }
     
     /**
-    private void createWindow() throws Exception{
-        Display.setFullscreen(false);
-        Display.setDisplayMode(new DisplayMode(x, y));
-        Display.setTitle("Hey Mom! I am using OpenGL!!!");
-        Display.create();
-    }
-    
-    private void initGL() {
-        glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-        glMatrixMode(GL_PROJECTION);
-        glLoadIdentity();
-        glOrtho(0, 640, 0, 480, 1, -1);
-        glMatrixMode(GL_MODELVIEW);
-        glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-
-    }
     
     private void render() {
         while (!Display.isCloseRequested()) {
