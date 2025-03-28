@@ -15,8 +15,8 @@ import org.lwjgl.BufferUtils;
 public class Cube {
     
     float cubeSize = 1f;
-    int x0 = 0;
-    int y0 = 0;
+    int x0 = -1;
+    int y0 = -1;
     FloatBuffer v0, v1, v2, v3, v4, v5, v6, v7;
 
     public static void main(String[] args) {
@@ -45,7 +45,6 @@ public class Cube {
     }
     
     private void quad(FloatBuffer va, FloatBuffer vb, FloatBuffer vc, FloatBuffer vd){
-        glColor3f(1.0f, 0.0f, 0.0f); // Red color
         glBegin(GL_QUADS);
             glVertex3f(va.get(0), va.get(1), va.get(2));
             glVertex3f(vb.get(0), vb.get(1), vb.get(2));
@@ -54,7 +53,7 @@ public class Cube {
         glEnd(); 
     }
     
-    private void cube(){
+    public void cube(){
         glColor3f(1.0f, 0.0f, 0.0f); // Red color
         quad(v6, v2, v3, v7);
         glColor3f(1.000f, 0.647f, 0.000f); // Orange color
@@ -79,26 +78,5 @@ public class Cube {
        
         }
     }
-    
-    /**
-    
-    private void render() {
-        while (!Display.isCloseRequested()) {
-            try{
-                glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-                glLoadIdentity();
-                glColor3f(1.0f,1.0f,0.0f);
-                glPointSize(10);
-                
-                    cube();
-                
-                Display.update();
-                Display.sync(60);
-            }catch(Exception e){
-            }
-        }
-        Display.destroy();
-    }
-    */
-    
+  
 }
