@@ -14,9 +14,9 @@ import org.lwjgl.BufferUtils;
  */
 public class Cube {
     
-    float cubeSize = 200f;
-    int x = 640;
-    int y = 480;
+    float cubeSize = 1f;
+    int x0 = -1;
+    int y0 = -1;
     FloatBuffer v0, v1, v2, v3, v4, v5, v6, v7;
 
     public static void main(String[] args) {
@@ -24,10 +24,7 @@ public class Cube {
         cube.start();
     }
     
-    private void initVertices(){
-        // bottom left vertex
-        float x0 = (x/2) - (cubeSize/2);
-        float y0 = (y/2) - (cubeSize/2);
+    public void initVertices(){
         float s = cubeSize;
         
         v0 = createVertex(x0, y0, 0);
@@ -48,7 +45,6 @@ public class Cube {
     }
     
     private void quad(FloatBuffer va, FloatBuffer vb, FloatBuffer vc, FloatBuffer vd){
-        glColor3f(1.0f, 0.0f, 0.0f); // Red color
         glBegin(GL_QUADS);
             glVertex3f(va.get(0), va.get(1), va.get(2));
             glVertex3f(vb.get(0), vb.get(1), vb.get(2));
@@ -57,7 +53,7 @@ public class Cube {
         glEnd(); 
     }
     
-    private void cube(){
+    public void cube(){
         glColor3f(1.0f, 0.0f, 0.0f); // Red color
         quad(v6, v2, v3, v7);
         glColor3f(1.000f, 0.647f, 0.000f); // Orange color
@@ -74,49 +70,13 @@ public class Cube {
    
     public void start() {
         try {
-            createWindow();
-            initGL();
             initVertices();
-            render();
+            cube();
+            //render();
         } catch (Exception e) {
         e.printStackTrace();
        
         }
     }
-    
-    private void createWindow() throws Exception{
-        Display.setFullscreen(false);
-        Display.setDisplayMode(new DisplayMode(x, y));
-        Display.setTitle("Hey Mom! I am using OpenGL!!!");
-        Display.create();
-    }
-    
-    private void initGL() {
-        glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-        glMatrixMode(GL_PROJECTION);
-        glLoadIdentity();
-        glOrtho(0, 640, 0, 480, 1, -1);
-        glMatrixMode(GL_MODELVIEW);
-        glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-
-    }
-    
-    private void render() {
-        while (!Display.isCloseRequested()) {
-            try{
-                glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-                glLoadIdentity();
-                glColor3f(1.0f,1.0f,0.0f);
-                glPointSize(10);
-                
-                    cube();
-                
-                Display.update();
-                Display.sync(60);
-            }catch(Exception e){
-            }
-        }
-        Display.destroy();
-    }
-    
+  
 }

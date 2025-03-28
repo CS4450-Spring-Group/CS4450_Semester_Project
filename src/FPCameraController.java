@@ -20,6 +20,7 @@ public class FPCameraController {
     //the rotation around the X axis of the camera
     private float pitch = 0.0f;
     private Vector3Float me;
+    Cube myCube = new Cube();
     
     public FPCameraController(float x, float y, float z)
     {
@@ -115,6 +116,7 @@ public class FPCameraController {
         float movementSpeed = .35f;
         //hide the mouse
         Mouse.setGrabbed(true);
+        myCube.initVertices();
         
         // keep looping till the display window is closed the ESC key is down
         while (!Display.isCloseRequested() &&
@@ -168,17 +170,14 @@ public class FPCameraController {
         }
         Display.destroy();
     }
-
+    
     private void render() {
-        try{
-            glBegin(GL_QUADS);
-            glColor3f(1.0f,0.0f,1.0f);
-            glVertex3f( 1.0f,-1.0f,-1.0f);
-            glVertex3f(-1.0f,-1.0f,-1.0f);
-            glVertex3f(-1.0f, 1.0f,-1.0f);
-            glVertex3f( 1.0f, 1.0f,-1.0f);
-            glEnd();
-        }catch(Exception e){
+        try {
+            myCube.cube(); // render the cube
+        } catch(Exception e) {
+            e.printStackTrace();
         }
     }
+
+    
 }
