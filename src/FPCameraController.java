@@ -20,7 +20,8 @@ public class FPCameraController {
     //the rotation around the X axis of the camera
     private float pitch = 0.0f;
     private Vector3Float me;
-    Cube myCube = new Cube();
+    Cube cube = new Cube();
+    Chunk chunk;
     
     public FPCameraController(float x, float y, float z)
     {
@@ -106,7 +107,7 @@ public class FPCameraController {
     
     public void gameLoop()
     {
-        FPCameraController camera = new FPCameraController(2, 0, -3);
+        FPCameraController camera = new FPCameraController(0, 0, -4);
         float dx = 0.0f;
         float dy = 0.0f;
         float dt = 0.0f; //length of frame
@@ -116,7 +117,7 @@ public class FPCameraController {
         float movementSpeed = .35f;
         //hide the mouse
         Mouse.setGrabbed(true);
-        myCube.initVertices();
+        chunk = new Chunk(0, 0, 0); // created chunk object
         
         // keep looping till the display window is closed the ESC key is down
         while (!Display.isCloseRequested() &&
@@ -130,6 +131,10 @@ public class FPCameraController {
             //distance in mouse movement
             //from the last getDY() call.
             dy = Mouse.getDY();
+            //control camera yaw from x movement from the mouse
+            camera.yaw(dx * mouseSensitivity);
+            //control camera pitch from y movement from the mouse
+            camera.pitch(dy * mouseSensitivity);
             //when passing in the distance to move
             //we times the movementSpeed with dt this is a time scale
             //so if its a slow frame u move more then a fast frame
@@ -163,7 +168,7 @@ public class FPCameraController {
             camera.lookThrough();
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
             //you would draw your scene here.
-            render();
+            chunk.render();   // call chunk render instead of this class' render
             //draw the buffer to the screen
             Display.update();
             Display.sync(60);
@@ -171,13 +176,9 @@ public class FPCameraController {
         Display.destroy();
     }
     
-    private void render() {
-        try {
-            myCube.cube(); // render the cube
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
-    }
+    public void render() {
 
-    
+        cube.render();
+        
+    } 
 }
