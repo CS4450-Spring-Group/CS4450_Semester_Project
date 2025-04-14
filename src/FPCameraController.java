@@ -8,7 +8,7 @@ import org.lwjgl.Sys;
 
 /**
  *
- * @author sarmi
+ *  * @author jellyj. sarmi, Max
  */
 
 public class FPCameraController {

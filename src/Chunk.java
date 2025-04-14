@@ -9,19 +9,19 @@ import org.newdawn.slick.util.ResourceLoader;
 
 /**
  *
- * @author jellyj.
+ * @author jellyj. sarmi, Max
  */
 public class Chunk {
     
     static final int CHUNK_SIZE = 30;
     static final int CUBE_LENGTH = 2;
-    private Block[][][] Blocks;
+    public Block[][][] Blocks;
     private int VBOVertexHandle;
     private int VBOColorHandle;
-    private int StartX, StartY, StartZ;
-    private Random r;
+    public int StartX, StartY, StartZ;
+    public Random r;
     private int VBOTextureHandle;
-    private Texture texture;
+    public Texture texture;
     
     public void render(){
         

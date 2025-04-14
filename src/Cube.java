@@ -7,7 +7,7 @@ import org.lwjgl.Sys;
 
 /**
  *
- * @author jellyj.
+ *  * @author jellyj. sarmi, Max
  */
 public class Cube {
     
