@@ -141,17 +141,19 @@ public class Chunk {
     }
     
     private float[] getCubeColor(Block block) {
-        switch (block.GetID()) {
-            case 1:
-                return new float[] { 0, 1, 0 };
-            case 2:
-                return new float[] { 1, 0.5f, 0 };
-            case 3:
-                return new float[] { 0, 0f, 1f };
+        if (block == null) {
+            return new float[] { 1, 1, 1 }; // Default white if null
         }
-        return new float[] { 1, 1, 1 };
-    
+
+        return switch (block.GetID()) {
+            case 1 -> new float[] { 0, 1, 0 };           // Grass
+            case 2 -> new float[] { 1, 0.5f, 0 };        // Sand
+            case 3 -> new float[] { 0, 0f, 1f };         // Water
+            default -> new float[] { 1, 1, 1 };          // Default white
+        };
     }
+
+
     
     public Chunk(int startX, int startY , int startZ) {
         
@@ -202,45 +204,61 @@ public class Chunk {
     }
     
     public static float[] createTexCube(float x, float y, Block block) {
-        float offset = (1024f/16)/1024f;
-        switch (block.GetID()) {
-            case 1:
-                return new float[] {
-                    // BOTTOM QUAD(DOWN=+Y)
-                    x + offset*3, y + offset*10,
-                    x + offset*2, y + offset*10,
-                    x + offset*2, y + offset*9,
-                    x + offset*3, y + offset*9,
-                    // TOP!
-                    x + offset*3, y + offset*1,
-                    x + offset*2, y + offset*1,
-                    x + offset*2, y + offset*0,
-                    x + offset*3, y + offset*0,
-                    // FRONT QUAD
-                    x + offset*3, y + offset*0,
-                    x + offset*4, y + offset*0,
-                    x + offset*4, y + offset*1,
+        float offset = (1024f / 16) / 1024f;
 
-                    x + offset*3, y + offset*1,
-                    // BACK QUAD
-                    x + offset*4, y + offset*1,
-                    x + offset*3, y + offset*1,
-                    x + offset*3, y + offset*0,
-                    x + offset*4, y + offset*0,
-                    // LEFT QUAD
-                    x + offset*3, y + offset*0,
-                    x + offset*4, y + offset*0,
-                    x + offset*4, y + offset*1,
-                    x + offset*3, y + offset*1,
-                    // RIGHT QUAD
-                    x + offset*3, y + offset*0,
-                    x + offset*4, y + offset*0,
-                    x + offset*4, y + offset*1,
-                    x + offset*3, y + offset*1
-                };
-
+        if (block == null) {
+            // Return default texture coordinates for a blank or default block
+            return new float[] {
+                x, y, x, y, x, y, x, y,
+                x, y, x, y, x, y, x, y,
+                x, y, x, y, x, y, x, y
+            };
         }
-    
+
+        return switch (block.GetID()) {
+            case 1 -> new float[] {
+                // BOTTOM
+                x + offset * 3, y + offset * 10,
+                x + offset * 2, y + offset * 10,
+                x + offset * 2, y + offset * 9,
+                x + offset * 3, y + offset * 9,
+
+                // TOP
+                x + offset * 3, y + offset * 1,
+                x + offset * 2, y + offset * 1,
+                x + offset * 2, y + offset * 0,
+                x + offset * 3, y + offset * 0,
+
+                // FRONT
+                x + offset * 3, y + offset * 0,
+                x + offset * 4, y + offset * 0,
+                x + offset * 4, y + offset * 1,
+                x + offset * 3, y + offset * 1,
+
+                // BACK
+                x + offset * 4, y + offset * 1,
+                x + offset * 3, y + offset * 1,
+                x + offset * 3, y + offset * 0,
+                x + offset * 4, y + offset * 0,
+
+                // LEFT
+                x + offset * 3, y + offset * 0,
+                x + offset * 4, y + offset * 0,
+                x + offset * 4, y + offset * 1,
+                x + offset * 3, y + offset * 1,
+
+                // RIGHT
+                x + offset * 3, y + offset * 0,
+                x + offset * 4, y + offset * 0,
+                x + offset * 4, y + offset * 1,
+                x + offset * 3, y + offset * 1
+            };
+            default -> new float[] {
+                x, y, x, y, x, y, x, y,
+                x, y, x, y, x, y, x, y,
+                x, y, x, y, x, y, x, y
+            };
+        };
     }
-   
+
 }
