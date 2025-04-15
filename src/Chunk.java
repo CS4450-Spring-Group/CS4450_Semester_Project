@@ -158,7 +158,7 @@ public class Chunk {
     public Chunk(int startX, int startY , int startZ) {
         
         try{
-            texture = TextureLoader.getTexture("PNG",
+            texture = TextureLoader.getTexture("png",
             ResourceLoader.getResourceAsStream("terrain.png"));
         }
         catch(Exception e)
