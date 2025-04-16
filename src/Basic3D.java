@@ -53,6 +53,8 @@ public class Basic3D {
         glEnableClientState(GL_VERTEX_ARRAY);
         glEnableClientState(GL_COLOR_ARRAY);
         glEnable(GL_DEPTH_TEST);
+        glEnable(GL_TEXTURE_2D);
+        glEnableClientState(GL_TEXTURE_COORD_ARRAY);
         
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
         
