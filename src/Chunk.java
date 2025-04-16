@@ -153,11 +153,7 @@ public class Chunk {
     private float[] getCubeColor(Block block) {
         return new float[]{1, 1, 1};
     }
-<<<<<<< Updated upstream
- 
-=======
-    
->>>>>>> Stashed changes
+
     public Chunk(int startX, int startY , int startZ) {
         
         try{
@@ -207,38 +203,19 @@ public class Chunk {
     }
     
     public static float[] createTexCube(float x, float y, Block block) {
-    float offset = 1.0f / 16.0f;
+        float offset = 1.0f / 16.0f;
 
-<<<<<<< Updated upstream
-    if (block == null) {
-        return createDefaultTexCoords(offset, 1, 0); 
-    }
-
-    return switch (block.GetID()) {
-        case 1 -> createGrassTexCoords(offset); 
-        case 2 -> createUniformTexCoords(offset, 2, 0); 
-        case 3 -> createUniformTexCoords(offset, 15, 12); 
-        default -> createDefaultTexCoords(offset, 1, 0); 
-    };
-}
-=======
         if (block == null) {
-            // Return default texture coordinates for a blank or default block
-            return new float[] {
-                x, y, x, y, x, y, x, y,
-                x, y, x, y, x, y, x, y,
-                x, y, x, y, x, y, x, y
-            };
+            return createDefaultTexCoords(offset, 1, 0); // default texture at (1,0)
         }
-        
+
         return switch (block.GetID()) {
-            case 1 -> new float[] {
-                // BOTTOM
-                x + offset * 3, y + offset * 10,
-                x + offset * 2, y + offset * 10,
-                x + offset * 2, y + offset * 9,
-                x + offset * 3, y + offset * 9,
->>>>>>> Stashed changes
+            case 1 -> createGrassTexCoords(offset); // Grass
+            case 2 -> createUniformTexCoords(offset, 2, 0); // Dirt
+            case 3 -> createUniformTexCoords(offset, 15, 12); // Water
+            default -> createDefaultTexCoords(offset, 1, 0); // Default
+        };
+    }
 
     private static float[] createUniformTexCoords(float offset, int texX, int texY) {
         float xMin = texX * offset;
@@ -290,4 +267,5 @@ public class Chunk {
     private static float[] createDefaultTexCoords(float offset, int texX, int texY) {
         return createUniformTexCoords(offset, texX, texY);
     }
+
 }
