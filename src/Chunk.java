@@ -203,62 +203,68 @@ public class Chunk {
     }
     
     public static float[] createTexCube(float x, float y, Block block) {
-        float offset = (1024f / 16) / 1024f;
+    float offset = 1.0f / 16.0f;
 
-        if (block == null) {
-            // Return default texture coordinates for a blank or default block
-            return new float[] {
-                x, y, x, y, x, y, x, y,
-                x, y, x, y, x, y, x, y,
-                x, y, x, y, x, y, x, y
-            };
-        }
-    
+    if (block == null) {
+        return createDefaultTexCoords(offset, 1, 0); 
+    }
 
-        return switch (block.GetID()) {
-            case 1 -> new float[] {
-                // BOTTOM
-                x + offset * 3, y + offset * 10,
-                x + offset * 2, y + offset * 10,
-                x + offset * 2, y + offset * 9,
-                x + offset * 3, y + offset * 9,
+    return switch (block.GetID()) {
+        case 1 -> createGrassTexCoords(offset); 
+        case 2 -> createUniformTexCoords(offset, 2, 0); 
+        case 3 -> createUniformTexCoords(offset, 15, 12); 
+        default -> createDefaultTexCoords(offset, 1, 0); 
+    };
+}
 
-                // TOP
-                x + offset * 3, y + offset * 1,
-                x + offset * 2, y + offset * 1,
-                x + offset * 2, y + offset * 0,
-                x + offset * 3, y + offset * 0,
+    private static float[] createUniformTexCoords(float offset, int texX, int texY) {
+        float xMin = texX * offset;
+        float xMax = xMin + offset;
+        float yMin = texY * offset;
+        float yMax = yMin + offset;
 
-                // FRONT
-                x + offset * 3, y + offset * 0,
-                x + offset * 4, y + offset * 0,
-                x + offset * 4, y + offset * 1,
-                x + offset * 3, y + offset * 1,
-
-                // BACK
-                x + offset * 4, y + offset * 1,
-                x + offset * 3, y + offset * 1,
-                x + offset * 3, y + offset * 0,
-                x + offset * 4, y + offset * 0,
-
-                // LEFT
-                x + offset * 3, y + offset * 0,
-                x + offset * 4, y + offset * 0,
-                x + offset * 4, y + offset * 1,
-                x + offset * 3, y + offset * 1,
-
-                // RIGHT
-                x + offset * 3, y + offset * 0,
-                x + offset * 4, y + offset * 0,
-                x + offset * 4, y + offset * 1,
-                x + offset * 3, y + offset * 1
-            };
-            default -> new float[] {
-                x, y, x, y, x, y, x, y,
-                x, y, x, y, x, y, x, y,
-                x, y, x, y, x, y, x, y
-            };
+        return new float[] {
+            // TOP
+            xMax, yMin, xMin, yMin, xMin, yMax, xMax, yMax,
+            // BOTTOM
+            xMax, yMax, xMin, yMax, xMin, yMin, xMax, yMin,
+            // FRONT
+            xMax, yMin, xMin, yMin, xMin, yMax, xMax, yMax,
+            // BACK
+            xMax, yMax, xMin, yMax, xMin, yMin, xMax, yMin,
+            // LEFT
+            xMax, yMin, xMin, yMin, xMin, yMax, xMax, yMax,
+            // RIGHT
+            xMax, yMin, xMin, yMin, xMin, yMax, xMax, yMax
         };
     }
 
+    private static float[] createGrassTexCoords(float offset) {
+        float topX = 0 * offset, topY = 0 * offset;
+        float sideX = 3 * offset, sideY = 1 * offset;
+        float dirtX = 2 * offset, dirtY = 0 * offset;
+
+        float topXMax = topX + offset, topYMax = topY + offset;
+        float sideXMax = sideX + offset, sideYMax = sideY + offset;
+        float dirtXMax = dirtX + offset, dirtYMax = dirtY + offset;
+
+        return new float[]{
+            // TOP
+            topXMax, topY, topX, topY, topX, topYMax, topXMax, topYMax,
+            // BOTTOM (dirt)
+            dirtXMax, dirtYMax, dirtX, dirtYMax, dirtX, dirtY, dirtXMax, dirtY,
+            // FRONT
+            sideXMax, sideY, sideX, sideY, sideX, sideYMax, sideXMax, sideYMax,
+            // BACK
+            sideXMax, sideYMax, sideX, sideYMax, sideX, sideY, sideXMax, sideY,
+            // LEFT
+            sideXMax, sideY, sideX, sideY, sideX, sideYMax, sideXMax, sideYMax,
+            // RIGHT
+            sideXMax, sideY, sideX, sideY, sideX, sideYMax, sideXMax, sideYMax
+        };
+    }
+
+    private static float[] createDefaultTexCoords(float offset, int texX, int texY) {
+        return createUniformTexCoords(offset, texX, texY);
+    }
 }
