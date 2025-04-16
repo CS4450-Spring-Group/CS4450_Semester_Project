@@ -43,6 +43,9 @@ public class Chunk {
         VBOColorHandle = glGenBuffers();
         VBOVertexHandle = glGenBuffers();
         VBOTextureHandle = glGenBuffers();
+        //create SimplexNoise object
+        //(int largestFeature,double persistence, int seed)
+        SimplexNoise noise = new SimplexNoise(128, .7, 17);
         
         FloatBuffer VertexPositionData = 
                 BufferUtils.createFloatBuffer(
@@ -56,7 +59,14 @@ public class Chunk {
         
         for(float x = 0; x < CHUNK_SIZE; x+=1){
             for(float z = 0; z < CHUNK_SIZE; z+=1){
-                for(float y = 0; y < CHUNK_SIZE; y++){
+                // Scale the coordinates to control terrain smoothness
+                float scaledX = (StartX + x) * 0.1f;
+                float scaledZ = (StartZ + z) * 0.1f;
+
+                // Use noise to get height for this (x, z) column
+                float noiseValue = (float) noise.getNoise(scaledX, scaledZ);
+                int height = (int)(noiseValue * 10 + CHUNK_SIZE * 0.5f);  // adjust as needed
+                for(float y = 0; y <= height; y++){
                     VertexPositionData.put(createCube(
                             (float)(startX + x * CUBE_LENGTH), 
                             (float)(y * CUBE_LENGTH + (int)(CHUNK_SIZE * .8)), 
@@ -141,20 +151,9 @@ public class Chunk {
     }
     
     private float[] getCubeColor(Block block) {
-        if (block == null) {
-            return new float[] { 1, 1, 1 }; // Default white if null
-        }
-
-        return switch (block.GetID()) {
-            case 1 -> new float[] { 0, 1, 0 };           // Grass
-            case 2 -> new float[] { 1, 0.5f, 0 };        // Sand
-            case 3 -> new float[] { 0, 0f, 1f };         // Water
-            default -> new float[] { 1, 1, 1 };          // Default white
-        };
+        return new float[]{1, 1, 1};
     }
-
-
-    
+ 
     public Chunk(int startX, int startY , int startZ) {
         
         try{

@@ -30,15 +30,12 @@ public class SimplexNoise {
             frequencys[i] = Math.pow(2,i);
             amplitudes[i] = Math.pow(persistence,octaves.length-i);
 
-
-
-
         }
 
     }
 
 
-    public double getNoise(int x, int y){
+    public double getNoise(float x, float y){
 
         double result=0;
 
