@@ -1,19 +1,14 @@
-/***************************************************************
-* file: Program1.java
-* author: Juan Sarmiento
-* class: CS 4450.01 Computer Graphics
-*
-* assignment: program 1
-* date last modified: 2/8/2025
-*
-* purpose: This program reads from the file the specifications to draw primitives
-*
-****************************************************************/
+
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import static org.lwjgl.opengl.GL11.*;
 import org.lwjgl.util.glu.GLU;
+
+/**
+ *
+ * @author jellyj. sarmi, Max
+ */
 
 public class Basic3D {
     private FPCameraController fp;

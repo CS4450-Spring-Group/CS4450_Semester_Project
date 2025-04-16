@@ -1,7 +1,7 @@
 
 /**
  *
- * @author jellyj.
+ * @author jellyj. sarmi, Max
  */
 public class Block {
     

@@ -3,7 +3,7 @@ import static org.lwjgl.opengl.GL11.*;
 
 /**
  *
- * @author jellyj.
+ *  * @author jellyj. sarmi, Max
  */
 public class Cube {
     
