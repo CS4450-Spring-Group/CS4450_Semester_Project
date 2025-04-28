@@ -253,7 +253,7 @@ public class Chunk {
             case 1 -> createUniformTexCoords(offset, 1, 0); // Stone
             case 2 -> createUniformTexCoords(offset, 2, 0); // Dirt
             case 3 -> createUniformTexCoords(offset, 0, 1); // Sand
-            case 4 -> createUniformTexCoords(offset, 3, 0); // Water
+            case 4 -> createUniformTexCoords(offset, 3, 0); // Grass
             case 5 -> createUniformTexCoords(offset, 1, 1); // Bedrock (fix bedrock location!)
             case 6 -> createUniformTexCoords(offset, 0, 2); // Gold Ore
             case 7 -> createUniformTexCoords(offset, 1, 2); // Iron Ore
