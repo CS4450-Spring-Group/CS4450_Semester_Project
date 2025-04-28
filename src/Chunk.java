@@ -57,32 +57,52 @@ public class Chunk {
                 BufferUtils.createFloatBuffer(
                         (CHUNK_SIZE * CHUNK_SIZE * CHUNK_SIZE) * 6 * 12);
         
-        for(float x = 0; x < CHUNK_SIZE; x+=1){
-            for(float z = 0; z < CHUNK_SIZE; z+=1){
-                // Scale the coordinates to control terrain smoothness
+        for (float x = 0; x < CHUNK_SIZE; x++) {
+            for (float z = 0; z < CHUNK_SIZE; z++) {
                 float scaledX = (StartX + x) * 0.1f;
                 float scaledZ = (StartZ + z) * 0.1f;
-
-                // Use noise to get height for this (x, z) column
                 float noiseValue = (float) noise.getNoise(scaledX, scaledZ);
-                int height = (int)(noiseValue * 10 + CHUNK_SIZE * 0.5f);  // adjust as needed
-                for(float y = 0; y <= height; y++){
+                int height = (int) (noiseValue * 10 + CHUNK_SIZE * 0.5f);
+
+                for (float y = 0; y <= height && y < CHUNK_SIZE; y++) {
+                    Block.BlockType type;
+
+                    if (y == 0) {
+                        type = Block.BlockType.BlockType_Bedrock;
+                    } else if (y == height) {
+                        float topNoise = (float) noise.getNoise(scaledX * 2, scaledZ * 2);
+                        if (topNoise > 0.4f) {
+                            type = Block.BlockType.BlockType_Grass;
+                        } else if (topNoise > 0.1f) {
+                            type = Block.BlockType.BlockType_Sand;
+                        } else {
+                            type = Block.BlockType.BlockType_Water;
+                        }
+                    } else if (y < height - 3) {
+                        type = Block.BlockType.BlockType_Stone;
+                    } else {
+                        type = Block.BlockType.BlockType_Dirt;
+                    }
+
+                    Blocks[(int) x][(int) y][(int) z] = new Block(type);
+
                     VertexPositionData.put(createCube(
-                            (float)(startX + x * CUBE_LENGTH), 
-                            (float)(y * CUBE_LENGTH + (int)(CHUNK_SIZE * .8)), 
-                            (float)(startZ + z * CUBE_LENGTH)));
+                        startX + x * CUBE_LENGTH,
+                        y * CUBE_LENGTH + (int) (CHUNK_SIZE * 0.8f),
+                        startZ + z * CUBE_LENGTH
+                    ));
                     VertexColorData.put(createCubeVertexCol(
-                            getCubeColor(Blocks[(int)x][(int)y][(int)z])));
+                        getCubeColor(Blocks[(int) x][(int) y][(int) z])
+                    ));
                     VertexTextureData.put(createTexCube(
-                            (float) 0, 
-                            (float) 0,
-                            Blocks[(int)(x)][(int) (y)][(int) (z)]));
-                    
+                        0,
+                        0,
+                        Blocks[(int) x][(int) y][(int) z]
+                    ));
                 }
-                
             }
-            
         }
+
         
         VertexTextureData.flip();
         VertexColorData.flip();

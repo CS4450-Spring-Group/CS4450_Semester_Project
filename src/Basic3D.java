@@ -4,6 +4,7 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import static org.lwjgl.opengl.GL11.*;
 import org.lwjgl.util.glu.GLU;
+import org.lwjgl.BufferUtils;
 
 /**
  *
@@ -23,6 +24,13 @@ public class Basic3D {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    
+    private java.nio.FloatBuffer asFloatBuffer(float[] values) {
+        java.nio.FloatBuffer buffer = BufferUtils.createFloatBuffer(values.length);
+        buffer.put(values);
+        buffer.flip();
+        return buffer;
     }
     
     private void createWindow() throws Exception{
@@ -48,6 +56,19 @@ public class Basic3D {
         glEnableClientState(GL_VERTEX_ARRAY);
         glEnableClientState(GL_COLOR_ARRAY);
         glEnable(GL_DEPTH_TEST);
+        // Lighting setup
+        glEnable(GL_LIGHTING);
+        glEnable(GL_LIGHT0);
+        glEnable(GL_COLOR_MATERIAL);
+
+        float[] ambientLight = { 0.3f, 0.3f, 0.3f, 1.0f };
+        float[] diffuseLight = { 1.0f, 1.0f, 1.0f, 1.0f };
+        float[] lightPosition = { 0.5f, 1.0f, 0.5f, 0.0f }; // Directional light
+
+        glLight(GL_LIGHT0, GL_AMBIENT, asFloatBuffer(ambientLight));
+        glLight(GL_LIGHT0, GL_DIFFUSE, asFloatBuffer(diffuseLight));
+        glLight(GL_LIGHT0, GL_POSITION, asFloatBuffer(lightPosition));
+
         glEnable(GL_TEXTURE_2D);
         glEnableClientState(GL_TEXTURE_COORD_ARRAY);
         

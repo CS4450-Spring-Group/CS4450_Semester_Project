@@ -3,13 +3,6 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< Updated upstream
-            <file>file:/Users/jellyj./Desktop/CS4450/Projects/CS4450_Semester_Project/src/Block.java</file>
-            <file>file:/Users/jellyj./Desktop/CS4450/Projects/CS4450_Semester_Project/src/FPCameraController.java</file>
-            <file>file:/Users/jellyj./Desktop/CS4450/Projects/CS4450_Semester_Project/src/SimplexNoise.java</file>
-            <file>file:/Users/jellyj./Desktop/CS4450/Projects/CS4450_Semester_Project/src/SimplexNoise_octave.java</file>
-            <file>file:/Users/jellyj./Desktop/CS4450/Projects/CS4450_Semester_Project/src/Vector3Float.java</file>
-=======
             <file>file:/C:/Users/zzfor/OneDrive/Documents/GitHub/CS4450_Semester_Project/src/SimplexNoise.java</file>
             <file>file:/C:/Users/zzfor/OneDrive/Documents/GitHub/CS4450_Semester_Project/src/Basic3D.java</file>
             <file>file:/C:/Users/zzfor/OneDrive/Documents/GitHub/CS4450_Semester_Project/src/Chunk.java</file>
@@ -18,7 +11,6 @@
             <file>file:/C:/Users/zzfor/OneDrive/Documents/GitHub/CS4450_Semester_Project/src/Vector3Float.java</file>
             <file>file:/C:/Users/zzfor/OneDrive/Documents/GitHub/CS4450_Semester_Project/src/FPCameraController.java</file>
             <file>file:/C:/Users/zzfor/OneDrive/Documents/GitHub/CS4450_Semester_Project/src/SimplexNoise_octave.java</file>
->>>>>>> Stashed changes
         </group>
     </open-files>
 </project-private>
