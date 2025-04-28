@@ -55,7 +55,7 @@ public class Chunk {
                         (CHUNK_SIZE * CHUNK_SIZE * CHUNK_SIZE) * 6 * 12);
         FloatBuffer VertexTextureData =
                 BufferUtils.createFloatBuffer(
-                        (CHUNK_SIZE * CHUNK_SIZE * CHUNK_SIZE) * 6 * 12);
+                        (CHUNK_SIZE * CHUNK_SIZE * CHUNK_SIZE) * 6 * 12);     
         
         for (float x = 0; x < CHUNK_SIZE; x++) {
             for (float z = 0; z < CHUNK_SIZE; z++) {
@@ -64,24 +64,45 @@ public class Chunk {
                 float noiseValue = (float) noise.getNoise(scaledX, scaledZ);
                 int height = (int) (noiseValue * 10 + CHUNK_SIZE * 0.5f);
 
-                for (float y = 0; y <= height && y < CHUNK_SIZE; y++) {
+                for (float y = 0; y < CHUNK_SIZE; y++) {
                     Block.BlockType type;
 
                     if (y == 0) {
                         type = Block.BlockType.BlockType_Bedrock;
+                    } else if (y > height) {
+                        continue; // Empty air space
                     } else if (y == height) {
                         float topNoise = (float) noise.getNoise(scaledX * 2, scaledZ * 2);
-                        if (topNoise > 0.4f) {
+                        if (topNoise > 0.2f) {
                             type = Block.BlockType.BlockType_Grass;
-                        } else if (topNoise > 0.1f) {
+                        } else if (topNoise > 0.0f) {
                             type = Block.BlockType.BlockType_Sand;
                         } else {
                             type = Block.BlockType.BlockType_Water;
                         }
-                    } else if (y < height - 3) {
-                        type = Block.BlockType.BlockType_Stone;
                     } else {
-                        type = Block.BlockType.BlockType_Dirt;
+                        // underground layers
+                        if (y < 5) {
+                            float oreNoise = (float) noise.getNoise(scaledX * 5, scaledZ * 5);
+                            if (oreNoise > 0.6f) {
+                                type = Block.BlockType.BlockType_DiamondOre;
+                            } else if (oreNoise > 0.3f) {
+                                type = Block.BlockType.BlockType_GoldOre;
+                            } else {
+                                type = Block.BlockType.BlockType_Stone;
+                            }
+                        } else if (y < 10) {
+                            float oreNoise = (float) noise.getNoise(scaledX * 4, scaledZ * 4);
+                            if (oreNoise > 0.6f) {
+                                type = Block.BlockType.BlockType_IronOre;
+                            } else if (oreNoise > 0.3f) {
+                                type = Block.BlockType.BlockType_CoalOre;
+                            } else {
+                                type = Block.BlockType.BlockType_Stone;
+                            }
+                        } else {
+                            type = Block.BlockType.BlockType_Dirt;
+                        }
                     }
 
                     Blocks[(int) x][(int) y][(int) z] = new Block(type);
@@ -102,6 +123,7 @@ public class Chunk {
                 }
             }
         }
+
 
         
         VertexTextureData.flip();
@@ -224,18 +246,29 @@ public class Chunk {
     
     public static float[] createTexCube(float x, float y, Block block) {
         float offset = 1.0f / 16.0f;
-
-        if (block == null) {
-            return createDefaultTexCoords(offset, 1, 0); // default texture at (1,0)
-        }
+        if (block == null) return createDefaultTexCoords(offset, 1, 0);
 
         return switch (block.GetID()) {
-            case 1 -> createGrassTexCoords(offset); // Grass
+            case 0 -> createGrassTexCoords(offset); // <---- SPECIAL handling for grass!!
+            case 1 -> createUniformTexCoords(offset, 1, 0); // Stone
             case 2 -> createUniformTexCoords(offset, 2, 0); // Dirt
-            case 3 -> createUniformTexCoords(offset, 15, 12); // Water
-            default -> createDefaultTexCoords(offset, 1, 0); // Default
+            case 3 -> createUniformTexCoords(offset, 0, 1); // Sand
+            case 4 -> createUniformTexCoords(offset, 3, 0); // Water
+            case 5 -> createUniformTexCoords(offset, 1, 1); // Bedrock (fix bedrock location!)
+            case 6 -> createUniformTexCoords(offset, 0, 2); // Gold Ore
+            case 7 -> createUniformTexCoords(offset, 1, 2); // Iron Ore
+            case 8 -> createUniformTexCoords(offset, 2, 2); // Coal Ore
+            case 9 -> createUniformTexCoords(offset, 0, 3); // Diamond Ore
+            case 10 -> createUniformTexCoords(offset, 1, 3); // Redstone Ore
+            case 11 -> createUniformTexCoords(offset, 3, 3); // Lapis Ore
+            case 12 -> createUniformTexCoords(offset, 1, 5); // Netherrack
+            case 13 -> createUniformTexCoords(offset, 2, 5); // Soul Sand
+            case 14 -> createUniformTexCoords(offset, 3, 5); // Glowstone
+            default -> createDefaultTexCoords(offset, 1, 0);
         };
     }
+
+
 
     private static float[] createUniformTexCoords(float offset, int texX, int texY) {
         float xMin = texX * offset;

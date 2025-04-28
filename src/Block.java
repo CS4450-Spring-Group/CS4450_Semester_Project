@@ -4,53 +4,63 @@
  * @author jellyj. sarmi, Max
  */
 public class Block {
-    
+
     private boolean isActive;
     private BlockType Type;
     private float x, y, z;
-    
-    public enum BlockType{
+
+    public enum BlockType {
         BlockType_Grass(0),
-        BlockType_Sand(1),
-        BlockType_Water(2),
-        BlockType_Dirt(3),
-        BlockType_Stone(4),
-        BlockType_Bedrock(5);
-        
+        BlockType_Stone(1),
+        BlockType_Dirt(2),
+        BlockType_Sand(3),
+        BlockType_Water(4),
+        BlockType_Bedrock(5),
+        BlockType_GoldOre(6),
+        BlockType_IronOre(7),
+        BlockType_CoalOre(8),
+        BlockType_DiamondOre(9),
+        BlockType_RedstoneOre(10),
+        BlockType_LapisOre(11),
+        BlockType_Netherrack(12),
+        BlockType_SoulSand(13),
+        BlockType_Glowstone(14);
+
         private int BlockID;
-        
-        BlockType(int i){
+
+        BlockType(int i) {
             BlockID = i;
         }
-        
-        public int GetID(){
+
+        public int GetID() {
             return BlockID;
         }
-        
-        public void SetID(int i){
+
+        public void SetID(int i) {
             BlockID = i;
         }
     }
-    
-    public Block(BlockType type){
+
+    public Block(BlockType type) {
         Type = type;
     }
-    
-    public void setCoords(float x, float y, float z){
+
+    public void setCoords(float x, float y, float z) {
         this.x = x;
         this.y = y;
         this.z = z;
     }
-    
-    public boolean isActice(){
+
+    public boolean isActive() {
         return isActive;
     }
-    
-    public void SetActive(boolean active){
+
+    public void SetActive(boolean active) {
         isActive = active;
     }
-    
-    public int GetID(){
+
+    public int GetID() {
         return Type.GetID();
     }
 }
+
