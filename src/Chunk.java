@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.nio.FloatBuffer;
 import java.util.Random;
 import org.lwjgl.BufferUtils;
@@ -202,7 +203,7 @@ public class Chunk {
             texture = TextureLoader.getTexture("png",
             ResourceLoader.getResourceAsStream("terrain.png"));
         }
-        catch(Exception e)
+        catch(IOException e)
         {
             System.out.print("ER-ROAR!");
         }
