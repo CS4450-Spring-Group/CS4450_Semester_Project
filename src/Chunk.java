@@ -45,7 +45,7 @@ public class Chunk {
         VBOTextureHandle = glGenBuffers();
         //create SimplexNoise object
         //(int largestFeature,double persistence, int seed)
-        SimplexNoise noise = new SimplexNoise(128, .7, 17);
+        SimplexNoise noise = new SimplexNoise(128, .7, new Random().nextInt());
         
         FloatBuffer VertexPositionData = 
                 BufferUtils.createFloatBuffer(
@@ -252,18 +252,18 @@ public class Chunk {
             case 0 -> createGrassTexCoords(offset); // <---- SPECIAL handling for grass!!
             case 1 -> createUniformTexCoords(offset, 1, 0); // Stone
             case 2 -> createUniformTexCoords(offset, 2, 0); // Dirt
-            case 3 -> createUniformTexCoords(offset, 0, 1); // Sand
-            case 4 -> createUniformTexCoords(offset, 3, 0); // Grass
+            case 3 -> createUniformTexCoords(offset, 2, 1); // Sand
+            //case 4 -> createUniformTexCoords(offset, 3, 0); // Grass
             case 5 -> createUniformTexCoords(offset, 1, 1); // Bedrock (fix bedrock location!)
             case 6 -> createUniformTexCoords(offset, 0, 2); // Gold Ore
             case 7 -> createUniformTexCoords(offset, 1, 2); // Iron Ore
             case 8 -> createUniformTexCoords(offset, 2, 2); // Coal Ore
-            case 9 -> createUniformTexCoords(offset, 0, 3); // Diamond Ore
-            case 10 -> createUniformTexCoords(offset, 1, 3); // Redstone Ore
-            case 11 -> createUniformTexCoords(offset, 3, 3); // Lapis Ore
-            case 12 -> createUniformTexCoords(offset, 1, 5); // Netherrack
-            case 13 -> createUniformTexCoords(offset, 2, 5); // Soul Sand
-            case 14 -> createUniformTexCoords(offset, 3, 5); // Glowstone
+            case 9 -> createUniformTexCoords(offset, 2, 3); // Diamond Ore
+            case 10 -> createUniformTexCoords(offset, 3, 3); // Redstone Ore
+            case 11 -> createUniformTexCoords(offset, 0, 10); // Lapis Ore
+            case 12 -> createUniformTexCoords(offset, 1, 9); // Netherrack
+            case 13 -> createUniformTexCoords(offset, 8, 6); // Soul Sand
+            case 14 -> createUniformTexCoords(offset, 9, 6); // Glowstone
             default -> createDefaultTexCoords(offset, 1, 0);
         };
     }
@@ -293,8 +293,8 @@ public class Chunk {
     }
 
     private static float[] createGrassTexCoords(float offset) {
-        float topX = 0 * offset, topY = 0 * offset;
-        float sideX = 3 * offset, sideY = 1 * offset;
+        float topX = 2 * offset, topY = 9 * offset;
+        float sideX = 3 * offset, sideY = 0 * offset;
         float dirtX = 2 * offset, dirtY = 0 * offset;
 
         float topXMax = topX + offset, topYMax = topY + offset;
