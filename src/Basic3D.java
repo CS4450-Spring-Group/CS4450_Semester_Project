@@ -72,7 +72,7 @@ public class Basic3D {
         glEnable(GL_TEXTURE_2D);
         glEnableClientState(GL_TEXTURE_COORD_ARRAY);
         
-        glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+        glClearColor(0.53f, 0.81f, 0.92f, 1.0f); // sky blue
         
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
