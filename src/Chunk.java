@@ -23,7 +23,7 @@ public class Chunk {
     public Random r;
     private int VBOTextureHandle;
     public Texture texture;
-    
+
     public void render(){
         
         glPushMatrix();
@@ -36,6 +36,8 @@ public class Chunk {
             glTexCoordPointer(2,GL_FLOAT,0,0L);
             glDrawArrays(GL_QUADS, 0, CHUNK_SIZE * CHUNK_SIZE * CHUNK_SIZE * 24);
         glPopMatrix();
+        
+        renderWater(600, 40);
         
     }
     
@@ -107,7 +109,7 @@ public class Chunk {
                     }
 
                     Blocks[(int) x][(int) y][(int) z] = new Block(type);
-
+                    
                     VertexPositionData.put(createCube(
                         startX + x * CUBE_LENGTH,
                         y * CUBE_LENGTH + (int) (CHUNK_SIZE * 0.8f),
@@ -140,7 +142,7 @@ public class Chunk {
         glBindBuffer(GL_ARRAY_BUFFER, VBOTextureHandle);
         glBufferData(GL_ARRAY_BUFFER, VertexTextureData, GL_STATIC_DRAW);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
-        
+          
     }
     
     private float[] createCubeVertexCol(float[] CubeColorArray) {
@@ -254,7 +256,7 @@ public class Chunk {
             case 1 -> createUniformTexCoords(offset, 1, 0); // Stone
             case 2 -> createUniformTexCoords(offset, 2, 0); // Dirt
             case 3 -> createUniformTexCoords(offset, 2, 1); // Sand
-            //case 4 -> createUniformTexCoords(offset, 3, 0); // Grass
+            //case 4 -> createUniformTexCoords(offset, 1, 11); // water
             case 5 -> createUniformTexCoords(offset, 1, 1); // Bedrock (fix bedrock location!)
             case 6 -> createUniformTexCoords(offset, 0, 2); // Gold Ore
             case 7 -> createUniformTexCoords(offset, 1, 2); // Iron Ore
@@ -320,6 +322,42 @@ public class Chunk {
 
     private static float[] createDefaultTexCoords(float offset, int texX, int texY) {
         return createUniformTexCoords(offset, texX, texY);
+    }
+    
+    private void renderWater(int size, int height) {
+        glEnable(GL_TEXTURE_2D);
+        glBindTexture(GL_TEXTURE_2D, texture.getTextureID());
+
+        float tileSize = 1.0f / 16.0f;
+        float xMin = 1 * tileSize;
+        float xMax = xMin + tileSize;
+        float yMin = 11 * tileSize;
+        float yMax = yMin + tileSize;
+
+        float y = height;
+        int half = size / 2;
+
+        glBegin(GL_QUADS);
+        for (int x = -half; x < half; x++) {
+            for (int z = -half; z < half; z++) {
+                // Skip any blocks inside the chunk
+                if (x >= 0 && x < CHUNK_SIZE-1 && z >= 0 && z < CHUNK_SIZE-1) continue;
+
+                float wx = StartX + x * CUBE_LENGTH;
+                float wz = StartZ + z * CUBE_LENGTH;
+
+                int offset = CUBE_LENGTH / 2;
+                float x0 = wx - offset, x1 = wx + offset;
+                float z0 = wz - offset, z1 = wz + offset;
+
+                // Top face of a water cube
+                glTexCoord2f(xMax, yMin); glVertex3f(x1, y, z0);
+                glTexCoord2f(xMin, yMin); glVertex3f(x0, y, z0);
+                glTexCoord2f(xMin, yMax); glVertex3f(x0, y, z1);
+                glTexCoord2f(xMax, yMax); glVertex3f(x1, y, z1);
+            }
+        }
+        glEnd();
     }
 
 }
