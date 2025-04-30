@@ -1,5 +1,4 @@
 
-import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import static org.lwjgl.opengl.GL11.*;
@@ -36,9 +35,9 @@ public class Basic3D {
     private void createWindow() throws Exception{
         Display.setFullscreen(false);
         DisplayMode d[] = Display.getAvailableDisplayModes();
-        for (int i = 0; i < d.length; i++) {
-            if (d[i].getWidth() == 640 && d[i].getHeight() == 480 && d[i].getBitsPerPixel() == 32) {
-                displayMode = d[i];
+        for (DisplayMode d1 : d) {
+            if (d1.getWidth() == 640 && d1.getHeight() == 480 && d1.getBitsPerPixel() == 32) {
+                displayMode = d1;
                 break;
             }
         }

@@ -29,15 +29,11 @@ public class FPCameraController {
     Cube cube = new Cube();
     Chunk chunk;
     
-    public FPCameraController(float x, float y, float z)
-    {
-        //instantiate position Vector3f to the x y z params.
+    public FPCameraController(float x, float y, float z) {
         position = new Vector3f(x, y, z);
-        lPosition = new Vector3f(x,y,z);
-        lPosition.x = 0f;
-        lPosition.y = 15f;
-        lPosition.z = 0f;
+        lPosition = new Vector3f(x, y, z);
     }
+
     
     //increment the camera's current yaw rotation
     public void yaw(float amount)

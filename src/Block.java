@@ -6,7 +6,7 @@
 public class Block {
 
     private boolean isActive;
-    private BlockType Type;
+    private final BlockType Type;
     private float x, y, z;
 
     public enum BlockType {
