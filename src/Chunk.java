@@ -37,7 +37,7 @@ public class Chunk {
             glDrawArrays(GL_QUADS, 0, CHUNK_SIZE * CHUNK_SIZE * CHUNK_SIZE * 24);
         glPopMatrix();
         
-        renderWater(600, 40);
+        //renderWater(600, 40);
         
     }
     
@@ -324,6 +324,7 @@ public class Chunk {
         return createUniformTexCoords(offset, texX, texY);
     }
     
+    /**
     private void renderWater(int size, int height) {
         glEnable(GL_TEXTURE_2D);
         glBindTexture(GL_TEXTURE_2D, texture.getTextureID());
@@ -359,5 +360,6 @@ public class Chunk {
         }
         glEnd();
     }
+    */
 
 }
