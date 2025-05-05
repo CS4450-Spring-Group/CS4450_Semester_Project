@@ -82,6 +82,24 @@ public class Chunk {
                             type = Block.BlockType.BlockType_Sand;
                         } else {
                             type = Block.BlockType.BlockType_Water;
+                        }if (type == Block.BlockType.BlockType_Grass && r.nextFloat() < 0.05f) {
+                            // choose red or yellow at random
+                            Block.BlockType flowerType = (r.nextFloat() < 0.5f)
+                                ? Block.BlockType.BlockType_RedFlower
+                                : Block.BlockType.BlockType_YellowFlower;
+
+                            // position the flower one block above
+                            VertexPositionData.put(createCube(
+                                startX + x * CUBE_LENGTH,
+                                (y + 1) * CUBE_LENGTH + (int)(CHUNK_SIZE * 0.8f),
+                                startZ + z * CUBE_LENGTH
+                            ));
+                            VertexColorData.put(
+                                createCubeVertexCol(getCubeColor(new Block(flowerType)))
+                            );
+                            VertexTextureData.put(
+                                createTexCube(0, 0, new Block(flowerType))
+                            );
                         }
                     } else {
                         // underground layers
@@ -267,6 +285,8 @@ public class Chunk {
             case 12 -> createUniformTexCoords(offset, 1, 9); // Netherrack
             case 13 -> createUniformTexCoords(offset, 8, 6); // Soul Sand
             case 14 -> createUniformTexCoords(offset, 9, 6); // Glowstone
+            case 15 -> createUniformTexCoords(offset, 12, 0); // Red flower
+            case 16 -> createUniformTexCoords(offset, 13, 0); // Yellow flower 
             default -> createDefaultTexCoords(offset, 1, 0);
         };
     }

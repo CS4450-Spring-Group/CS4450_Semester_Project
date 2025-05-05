@@ -59,6 +59,10 @@ public class Basic3D {
         glEnable(GL_LIGHTING);
         glEnable(GL_LIGHT0);
         glEnable(GL_COLOR_MATERIAL);
+            
+        //remove the flower cube white backgound
+        glEnable(GL_ALPHA_TEST);
+        glAlphaFunc(GL_GREATER, 0.1f);
 
         float[] ambientLight = { 0.3f, 0.3f, 0.3f, 1.0f };
         float[] diffuseLight = { 1.0f, 1.0f, 1.0f, 1.0f };

@@ -24,7 +24,9 @@ public class Block {
         BlockType_LapisOre(11),
         BlockType_Netherrack(12),
         BlockType_SoulSand(13),
-        BlockType_Glowstone(14);
+        BlockType_Glowstone(14),
+        BlockType_RedFlower(15),
+        BlockType_YellowFlower(16);
 
         private int BlockID;
 
