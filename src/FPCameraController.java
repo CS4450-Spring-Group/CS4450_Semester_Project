@@ -20,11 +20,11 @@ public class FPCameraController {
     //the rotation around the X axis of the camera
     private float pitch = 0.0f;
     private Vector3Float me;
-    private final float minX = -100f;
-    private final float maxX = 60f;
-    private final float minZ = -100f;
-    private final float maxZ = 60f;
-    private final float minY = 60f;
+    private final float minX = -59f;
+    private final float maxX = 1f;
+    private final float minZ = -57f;
+    private final float maxZ = 1f;
+    private final float minY = 24f;
     private final float maxY = 90f;
     private Basic3D basic3D;
     Cube cube = new Cube();
