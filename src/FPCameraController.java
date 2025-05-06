@@ -26,6 +26,7 @@ public class FPCameraController {
     private final float maxZ = 60f;
     private final float minY = 60f;
     private final float maxY = 90f;
+    private Basic3D basic3D;
     Cube cube = new Cube();
     Chunk chunk;
     
@@ -33,7 +34,10 @@ public class FPCameraController {
         position = new Vector3f(x, y, z);
         lPosition = new Vector3f(x, y, z);
     }
-
+    
+    public void setBasic3D(Basic3D basic3D) {
+        this.basic3D = basic3D;
+    }
     
     //increment the camera's current yaw rotation
     public void yaw(float amount)
@@ -194,6 +198,8 @@ public class FPCameraController {
             //you would draw your scene here.
             chunk.render();   // call chunk render instead of this class' render
             //draw the buffer to the screen
+            basic3D.updateDayNightCycle();
+            basic3D.renderStars();
             Display.update();
             Display.sync(60);
         }
