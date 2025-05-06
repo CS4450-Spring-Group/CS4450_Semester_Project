@@ -1,4 +1,7 @@
 
+import java.nio.FloatBuffer;
+import java.util.ArrayList;
+import java.util.List;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import static org.lwjgl.opengl.GL11.*;
@@ -13,16 +16,63 @@ import org.lwjgl.BufferUtils;
 public class Basic3D {
     private FPCameraController fp;
     private DisplayMode displayMode;
+    private float timeOfDay = 0.0f;
+    private float daySpeed = 0.005f; // Smaller = slower transition
+    private List<float[]> stars = new ArrayList<>();
+    private final int STAR_COUNT = 100;
+    private FloatBuffer whiteLight;
     
     public void start() {
         try {
             createWindow();
             initGL();
             fp = new FPCameraController(0f,0f,0f);
+            fp.setBasic3D(this);
             fp.gameLoop();//render();
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    
+    public void updateDayNightCycle() {
+        timeOfDay += daySpeed;
+        if (timeOfDay > 2.0f) {
+            timeOfDay -= 2.0f;
+        }
+
+        float brightness = Math.abs((timeOfDay % 2.0f) - 1.0f);
+        float r = 0.5f + 0.5f * brightness;
+        float g = 0.5f + 0.5f * brightness;
+        float b = 1.0f;
+
+        whiteLight.clear();
+        whiteLight.put(r).put(g).put(b).put(0.0f).flip();
+
+        glLight(GL_LIGHT0, GL_DIFFUSE, whiteLight);
+        glLight(GL_LIGHT0, GL_SPECULAR, whiteLight);
+        
+        // Adjust sky color based on time of day
+        float skyR = 0.1f + 0.4f * brightness;
+        float skyG = 0.1f + 0.4f * brightness;
+        float skyB = 0.3f + 0.5f * brightness;
+
+        glClearColor(skyR, skyG, skyB, 1.0f);
+    }
+    
+    public void renderStars() {
+        float brightness = 1.0f - Math.abs((timeOfDay % 2.0f) - 1.0f);
+        if (brightness < 0.2f) return;
+
+        glDisable(GL_LIGHTING);
+        glColor4f(1.0f, 1.0f, 1.0f, brightness);
+
+        glPointSize(2.0f);
+        glBegin(GL_POINTS);
+        for (float[] star : stars) {
+            glVertex3f(star[0], star[1], star[2]);
+        }
+        glEnd();
+        glEnable(GL_LIGHTING);
     }
     
     private java.nio.FloatBuffer asFloatBuffer(float[] values) {
@@ -77,7 +127,7 @@ public class Basic3D {
         glEnable(GL_TEXTURE_2D);
         glEnableClientState(GL_TEXTURE_COORD_ARRAY);
         
-        glClearColor(0.53f, 0.81f, 0.92f, 1.0f); // sky blue
+        //glClearColor(0.53f, 0.81f, 0.92f, 1.0f); // sky blue
         
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
@@ -87,6 +137,28 @@ public class Basic3D {
         
         glMatrixMode(GL_MODELVIEW);
         glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+        
+        // Initialize light color
+        whiteLight = BufferUtils.createFloatBuffer(4);
+        whiteLight.put(1.0f).put(1.0f).put(1.0f).put(0.0f).flip();
+
+        // Optional: light position (e.g. from the side)
+        FloatBuffer lightPos = BufferUtils.createFloatBuffer(4);
+        lightPos.put(30.0f).put(10.0f).put(0.0f).put(1.0f).flip();
+
+        // OpenGL light setup
+        glLight(GL_LIGHT0, GL_POSITION, lightPos);
+        glLight(GL_LIGHT0, GL_DIFFUSE, whiteLight);
+        glLight(GL_LIGHT0, GL_SPECULAR, whiteLight);
+        glEnable(GL_LIGHTING);
+        glEnable(GL_LIGHT0);
+        
+        for (int i = 0; i < STAR_COUNT; i++) {
+            float x = (float)(Math.random() * 300 - 150);   // wider
+            float y = (float)(Math.random() * 100 + 80);    // higher up
+            float z = (float)(Math.random() * 300 - 150);
+            stars.add(new float[]{x, y, z});
+        }
     }
     
     public static void main(String[] args) {
