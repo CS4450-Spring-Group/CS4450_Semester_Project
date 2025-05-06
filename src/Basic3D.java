@@ -34,6 +34,9 @@ public class Basic3D {
         }
     }
     
+    /**
+    * Sky night cycle
+    */
     public void updateDayNightCycle() {
         timeOfDay += daySpeed;
         if (timeOfDay > 2.0f) {
@@ -59,6 +62,9 @@ public class Basic3D {
         glClearColor(skyR, skyG, skyB, 1.0f);
     }
     
+    /**
+    * Draws the twinkling stars against the sky.
+    */
     public void renderStars() {
         float brightness = 1.0f - Math.abs((timeOfDay % 2.0f) - 1.0f);
         if (brightness < 0.2f) return;
@@ -111,6 +117,8 @@ public class Basic3D {
         glEnable(GL_COLOR_MATERIAL);
             
         //remove the flower cube white backgound
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glEnable(GL_ALPHA_TEST);
         glAlphaFunc(GL_GREATER, 0.1f);
 
