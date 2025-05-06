@@ -349,13 +349,14 @@ public class Chunk {
         glEnable(GL_TEXTURE_2D);
         glBindTexture(GL_TEXTURE_2D, texture.getTextureID());
 
+        // location of water in terrain.png
         float tileSize = 1.0f / 16.0f;
         float xMin = 1 * tileSize;
         float xMax = xMin + tileSize;
         float yMin = 11 * tileSize;
         float yMax = yMin + tileSize;
 
-        float y = height;
+        float y = height; 
         int half = size / 2;
 
         glBegin(GL_QUADS);
@@ -364,18 +365,18 @@ public class Chunk {
                 // Skip any blocks inside the chunk
                 if (x >= 0 && x < CHUNK_SIZE-1 && z >= 0 && z < CHUNK_SIZE-1) continue;
 
-                float wx = StartX + x * CUBE_LENGTH;
-                float wz = StartZ + z * CUBE_LENGTH;
+                float wx = StartX + x * CUBE_LENGTH; // world x coordinate for center of tile
+                float wz = StartZ + z * CUBE_LENGTH; // world z coordinate for center of tile
 
-                int offset = CUBE_LENGTH / 2;
-                float x0 = wx - offset, x1 = wx + offset;
-                float z0 = wz - offset, z1 = wz + offset;
+                int offset = CUBE_LENGTH / 2; // offset from center to edge of tile
+                float left = wx - offset, right = wx + offset; 
+                float back = wz - offset, front = wz + offset; 
 
                 // Top face of a water cube
-                glTexCoord2f(xMax, yMin); glVertex3f(x1, y, z0);
-                glTexCoord2f(xMin, yMin); glVertex3f(x0, y, z0);
-                glTexCoord2f(xMin, yMax); glVertex3f(x0, y, z1);
-                glTexCoord2f(xMax, yMax); glVertex3f(x1, y, z1);
+                glTexCoord2f(xMax, yMin); glVertex3f(right, y, back);
+                glTexCoord2f(xMin, yMin); glVertex3f(left, y, back);
+                glTexCoord2f(xMin, yMax); glVertex3f(left, y, front);
+                glTexCoord2f(xMax, yMax); glVertex3f(right, y, front);
             }
         }
         glEnd();
